@@ -96,7 +96,7 @@
     set showmatch " show matching brackets
     "set sidescrolloff=10 " Keep 5 lines at the size
     set laststatus=2 " always show the status line
-    "set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
+    set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
     "              | | | | |  |   |      |  |     |    |
     "              | | | | |  |   |      |  |     |    + current
     "              | | | | |  |   |      |  |     |       column
@@ -271,23 +271,23 @@
     "endif
 
 " Mappings
-    map <F2> :NERDTreeToggle<CR>
+    "map <F2> :NERDTreeToggle<CR>
     map <F3> :TagbarToggle<CR>
     "map <F3> :TlistToggle<CR>
     map <F4> :wincmd p<CR>
-    map <F5> :BufExplorer<CR>
-    "map <F6> :call QFToggle()<CR>
+    map <F2> :WMToggle<CR>
+    map <F6> :exec "!gtags &"<CR>
     "map <F6> :ConqueTermTab bash<CR>
-    map <F7> :call RTrailing()<CR>
-    map <F8> :set list!<CR>
-    map <F9> :set nu!<CR>
-    map <F10> :tab ball<CR>
-    map <F11> :mks! ~/.vim/tmp/session.vim<CR>
-    map <F12> :source ~/.vim/tmp/session.vim<CR>
+    "map <F7> :call RTrailing()<CR>
+    "map <F8> :set list!<CR>
+    "map <F9> :set nu!<CR>
+    "map <F10> :tab ball<CR>
+    "map <F11> :mks! ~/.vim/tmp/session.vim<CR>
+    "map <F12> :source ~/.vim/tmp/session.vim<CR>
     map <leader>1 :NERDTreeToggle<CR>
     map <leader>2 :TagbarToggle<CR>
     map <leader>3 :wincmd p<CR>
-    map <leader>4 :BufExplorer<CR>
+    "map <leader>4 :BufExplorer<CR>
 
     " Gtags
     nmap <leader>g :Gtags<CR>
@@ -303,14 +303,14 @@
     nmap <leader>w :w !sudo tee %<CR>
 
     " Switch tab
-    "map <C-left> :tabprevious<CR>
-    "map <C-right> :tabnext<CR>
-    "map <C-up> :tabnew<CR>
+    map <C-left> :tabprevious<CR>
+    map <C-right> :tabnext<CR>
+    map <C-up> :tabnew<CR>
     "map <C-W> :tabclose<CR>
 
     " Switch buffer
-    map <C-left> :bprevious<CR>
-    map <C-right> :bnext<CR>
+    "map <C-left> :bprevious<CR>
+    "map <C-right> :bnext<CR>
     map <C-down> :bdelete<CR>
 
     " Switch between windows, maximizing the current window
@@ -328,6 +328,8 @@
     noremap <C-MouseDown> l
     noremap <C-MouseUp> h
 
+    " arrow key
+
     " File encodings
     map <leader>j :e ++enc=cp932<CR>
 
@@ -339,18 +341,23 @@
     " Bundles source:
         " File Manager
             Bundle 'The-NERD-tree'
+            Bundle 'winmanager'
             Bundle 'ctrlp.vim'
-            Bundle 'bufexplorer.zip'
-            "Bundle 'fholgado/minibufexpl.vim'
-            Bundle 'zefei/buftabs'
+            "Bundle 'bufexplorer.zip'
         " Tracing code
             "Bundle 'taglist.vim'
             Bundle 'Tagbar'
             Bundle 'gtags.vim'
-            "Bundle 'cscope.vim'
+            Bundle 'cscope.vim'
+            Bundle 'jordanchen/gtags-cscope.vim'
             Bundle 'chazy/cscope_maps'
             Bundle 'matchit.zip'
-        " Auto code completion
+            "Bundle 'zhisheng/visualmark.vim'
+            "Bundle 'Visual-Mark'
+            Bundle 'showliu/vbookmark.vim'
+
+
+            " Auto code completion
             " Snipmate dependency
                 Bundle 'snipmate-snippets'
                 Bundle 'MarcWeber/vim-addon-mw-utils'
@@ -378,6 +385,7 @@
             Bundle 'gmarik/vundle'
             Bundle 'YankRing.vim'
             "Bundle 'godlygeek/tabular'
+            Bundle 'minibufexpl.vim'
 
     filetype plugin indent on " required!
 
@@ -421,14 +429,43 @@
         "autocmd FileType * nested :call tagbar#autoopen(0) " open a supported file
 
     " bufexplorer
-        let g:bufExplorerSplitBelow = 1
+    "    let g:bufExplorerSplitBelow = 1
 
     " YankRing
         let g:yankring_history_dir = '$HOME/.vim/tmp'
 
-    " BufTabs
-        set statusline=\ #{buftabs}%=\ [%f]\ L%-5l
-
     " vim-colors-solarized
         set t_Co=256
         colorscheme desert
+
+    " winmanager
+    let g:NERDTree_title="[NERDTree]"
+    let g:winManagerWindowLayout="NERDTree"
+
+    function! NERDTree_Start()
+        exec 'NERDTree'
+    endfunction
+
+    function! NERDTree_IsValid()
+        return 1
+    endfunction
+
+    " mini Buf explorer
+	let g:miniBufExplMapWindowNavVim = 1
+	let g:miniBufExplMapWindowNavArrows = 1
+	let g:miniBufExplMapCTabSwitchBufs = 1
+    let g:miniBufExplModSelTarget = 1
+	let g:miniBufExplMoreThanOne = 0
+    let g:miniBufExplSplitBelow=0
+
+    "<F9> mark: in plugin filesmap
+    "<F9> <Plug>Vm_toggle_signmap
+    "<c-F9> <Plug>Vm_goto_next_signmap
+    "<s-F9> <Plug>Vm_goto_prev_sign
+    let g:vbookmark_bookmarkSaveFile = $HOME . '/.vim/vbookmark_tmp'
+    let g:vbookmark_disableMapping = 1
+    nnoremap <silent> <C-F9> :VbookmarkToggle<CR>
+    nnoremap <silent> <F9> :VbookmarkNext<CR>
+    nnoremap <silent> <S-F9> :VbookmarkPrevious<CR>
+
+
