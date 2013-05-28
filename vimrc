@@ -347,7 +347,7 @@
         " Tracing code
             "Bundle 'taglist.vim'
             Bundle 'Tagbar'
-            Bundle 'gtags.vim'
+            " Bundle 'gtags.vim'
             Bundle 'cscope.vim'
             Bundle 'jordanchen/gtags-cscope.vim'
             Bundle 'chazy/cscope_maps'
@@ -355,6 +355,7 @@
             "Bundle 'zhisheng/visualmark.vim'
             "Bundle 'Visual-Mark'
             Bundle 'showliu/vbookmark.vim'
+            Bundle 'showliu/gtags.vim'
 
 
             " Auto code completion
