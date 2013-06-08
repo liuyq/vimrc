@@ -312,6 +312,7 @@
     "map <C-left> :bprevious<CR>
     "map <C-right> :bnext<CR>
     map <C-down> :bdelete<CR>
+    map <Esc>[B <Down>
 
     " Switch between windows, maximizing the current window
     noremap <C-H> <C-W>h<C-W>_
